@@ -1,0 +1,92 @@
+<div class="container">
+    <p-fieldset [legend]="caption">
+     <p-table [columns]="cols" [value]="customers" selectionMode="single" [paginator]="true" [(selection)]="selectedCustomer" (onRowSelect)="onRowSelect($event)"
+     [rows]="20" [resizableColumns]="true">
+      <ng-template pTemplate="caption">
+          {{ numOfCustomers }} Listed Customers
+        </ng-template>
+      <ng-template pTemplate="header">
+          <tr>
+              <th *ngFor="let col of cols" [pSortableColumn]="col.field" pResizableColumn>
+              {{ col.displayName }}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+              </th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr [pSelectableRow]="rowData">
+              <td *ngFor="let col of columns">
+                  <div *ngIf="col.displayName==='Password'">****************</div>
+                  <div *ngIf="col.displayName!=='Password'">{{rowData[col.field]}}</div>
+                </td>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="summary" let-rowData>
+          <div style="text-align:left">
+              <button pButton class="ui-button-rounded" type="button" pi-times icon="pi pi-plus" (click)="showDialogToAdd()" label="Add"></button>
+          </div>
+      </ng-template>
+    </p-table>
+    <span>*For update/delete a record please select a row</span>
+    </p-fieldset>
+    </div>
+    <p-dialog id="customerDialog" header="Customer Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="500"
+[dismissableMask]="true">
+ <br>
+    <form [formGroup]="createCustomerDialogForm">
+        <div class="form-group" [class.has-error]="createCustomerDialogForm.controls['custName'].invalid && createCustomerDialogForm.controls['custName'].touched"
+        [class.has-success]="createCustomerDialogForm.controls['custName'].valid && createCustomerDialogForm.controls['custName'].touched">
+        <span class="ui-float-label">
+          <input id="custName" type="text" formControlName="custName" class="form-control" name="custName" [(ngModel)]="customer.custName"
+           pInputText>
+          <label for="custName" class="control-label">Name</label>
+        </span>
+        <span class="help-block" *ngIf="createCustomerDialogForm.controls['custName'].invalid && createCustomerDialogForm.controls['custName'].touched">
+            Name Is Required</span>
+      </div><br>
+
+      <div class="form-group" [class.has-error]="createCustomerDialogForm.controls['password'].invalid && createCustomerDialogForm.controls['password'].touched"
+      [class.has-success]="createCustomerDialogForm.controls['password'].valid && createCustomerDialogForm.controls['password'].touched">
+      <span class="ui-float-label">
+        <input id="password" type="password" formControlName="password" class="form-control" name="password" [(ngModel)]="customer.password"
+         pInputText>
+        <label for="password" class="control-label">Password</label>
+      </span>
+      <span id="hideShowPassword" toggle="#password" class="pi pi-pw pi-eye field-icon toggle-password"></span>
+      <span class="help-block" *ngIf="createCustomerDialogForm.controls['password'].invalid && createCustomerDialogForm.controls['password'].touched">
+          Password Is Required
+      </span>
+    </div><br>
+
+  <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix ui-button-icon-left">
+          <button  type="button" pButton class="ui-button-rounded ui-button-danger" icon="pi pi-times" (click)="delete()" [label]="DialogLeftButton"></button>
+          &nbsp;
+          <button type="button" [disabled]="!createCustomerDialogForm.valid" pButton  class="ui-button-rounded ui-button-success" icon="pi pi-save" (click)="save()" [label]="DialogRightButton"></button>
+      </div>
+  </p-footer>
+    </form>
+</p-dialog>
+
+
+
+
+    <!-- <p-dialog header="Customer Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="300">
+        <div class="ui-g ui-fluid" *ngIf="customer">
+            <div class="ui-g-12" *ngFor="let col of cols">
+                <div class="ui-g-4">
+                    <label for="{col.field}">{{ col.displayName }}</label>
+                </div>
+                <div class="ui-g-8">
+                    <input [type]="col.type" attr.id="col.field" [(ngModel)]="customer[col.field]" [disabled]="col.disabled==='true'"/>
+                </div>
+            </div>
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                <button type="button" pButton icon="pi pi-times" (click)="delete()" [label]="DialogLeftButton"></button>
+                <button type="button" pButton icon="pi pi-save" (click)="save()" [label]="DialogRightButton"></button>
+            </div>
+        </p-footer>
+    </p-dialog> -->
+

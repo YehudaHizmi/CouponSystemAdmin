@@ -1,0 +1,105 @@
+<div class="container">
+<p-fieldset [legend]="caption">
+ <p-table [columns]="cols" [value]="companies" selectionMode="single" [paginator]="true" [(selection)]="selectedCompany" (onRowSelect)="onRowSelect($event)"
+ [rows]="20" [resizableColumns]="true">
+ <ng-template pTemplate="caption">
+  {{ numOfCompanies }} Listed Companies
+  </ng-template>
+  <ng-template pTemplate="header">
+      <tr>
+          <th *ngFor="let col of cols" [pSortableColumn]="col.field" pResizableColumn>
+          {{ col.displayName }}
+          <p-sortIcon [field]="col.field"></p-sortIcon>
+          </th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pSelectableRow]="rowData">
+          <td *ngFor="let col of columns">
+            <div *ngIf="col.displayName==='Password'">****************</div>
+            <div *ngIf="col.displayName!=='Password'">{{rowData[col.field]}}</div>
+          </td>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="summary" let-rowData>
+      <div style="text-align:left">
+          <button pButton class="ui-button-rounded" type="button"  icon="pi pi-plus" (click)="showDialogToAdd()" label="Add"></button>
+      </div>
+  </ng-template>
+</p-table>
+<span>*For update/delete a record please select a row</span>
+</p-fieldset>
+</div>
+<p-dialog id="compnayDialog" header="Company Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="500"
+[dismissableMask]="true">
+ <br>
+    <form [formGroup]="createCompanyDialogForm">
+        <div class="form-group" [class.has-error]="createCompanyDialogForm.controls['compName'].invalid && createCompanyDialogForm.controls['compName'].touched"
+        [class.has-success]="createCompanyDialogForm.controls['compName'].valid && createCompanyDialogForm.controls['compName'].touched">
+        <span class="ui-float-label">
+          <input id="compName" type="text" formControlName="compName" class="form-control" name="compName" [(ngModel)]="company.compName"
+           pInputText>
+          <label for="compName" class="control-label">Name</label>
+        </span>
+        <span class="help-block" *ngIf="createCompanyDialogForm.controls['compName'].invalid && createCompanyDialogForm.controls['compName'].touched">
+            Name Is Required</span>
+      </div><br>
+
+      <div class="form-group" [class.has-error]="createCompanyDialogForm.controls['password'].invalid && createCompanyDialogForm.controls['password'].touched"
+      [class.has-success]="createCompanyDialogForm.controls['password'].valid && createCompanyDialogForm.controls['password'].touched">
+      <span class="ui-float-label">
+        <input id="password" type="password" formControlName="password" class="form-control" name="password" [(ngModel)]="company.password"
+        pPassword>
+        <label for="password" class="control-label">Password</label>
+      </span>
+      <span toggle="#password" class="pi pi-pw pi-eye field-icon toggle-password"></span>
+      <span class="help-block" *ngIf="createCompanyDialogForm.controls['password'].invalid && createCompanyDialogForm.controls['password'].touched">
+          Password Is Required
+        </span>
+    </div><br>
+
+    <div class="form-group" [class.has-error]="createCompanyDialogForm.controls['email'].invalid && createCompanyDialogForm.controls['email'].touched"
+    [class.has-success]="createCompanyDialogForm.controls['email'].valid && createCompanyDialogForm.controls['email'].touched">
+    <span class="ui-float-label">
+      <input id="email" type="text" formControlName="email" class="form-control" name="email" [(ngModel)]="company.email"
+       pInputText>
+      <label for="email" class="control-label">Email</label>
+    </span>
+    <span class="help-block" *ngIf="createCompanyDialogForm.controls['email'].invalid && createCompanyDialogForm.controls['email'].touched">
+        <span class="help-block" *ngIf="createCompanyDialogForm.get('email').errors['required']">
+        Email Is Required
+    </span>
+        <span class="help-block" *ngIf="createCompanyDialogForm.get('email').errors['email']">
+            Please Enter A vaild Email
+        </span>
+      </span>
+  </div><br>
+  <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix ui-button-icon-left">
+          <button  type="button" pButton class="ui-button-rounded ui-button-danger" icon="pi pi-times" (click)="delete()" [label]="DialogLeftButton"></button>
+          &nbsp;
+          <button type="button" [disabled]="!createCompanyDialogForm.valid" pButton  class="ui-button-rounded ui-button-success" icon="pi pi-save" (click)="save()" [label]="DialogRightButton"></button>
+      </div>
+  </p-footer>
+    </form>
+</p-dialog>
+
+<!-- <p-dialog header="Company Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="300">
+    <div class="ui-g ui-fluid" *ngIf="company">
+        <div class="ui-g-12" *ngFor="let col of cols">
+            <div class="ui-g-4">
+                <label for="{col.field}">{{ col.displayName }}</label>
+            </div>
+            <div class="ui-g-8">
+                <input [type]="col.type" attr.id="col.field" [(ngModel)]="company[col.field]" required [disabled]="col.disabled==='true'"/>
+            </div>
+        </div>
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+            <button type="button" pButton icon="pi pi-times" (click)="delete()" [label]="DialogLeftButton"></button>
+            <button type="button" pButton icon="pi pi-save" (click)="save()" [label]="DialogRightButton"></button>
+        </div>
+    </p-footer>
+</p-dialog> -->
+

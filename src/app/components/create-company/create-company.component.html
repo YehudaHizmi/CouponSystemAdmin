@@ -1,0 +1,43 @@
+<div class="container">
+<p-fieldset [legend]="caption">
+    <form [formGroup]="createCompanyForm">
+        <div class="form-group" [class.has-error]="createCompanyForm.controls['compName'].invalid && createCompanyForm.controls['compName'].touched"
+        [class.has-success]="createCompanyForm.controls['compName'].valid && createCompanyForm.controls['compName'].touched">
+      <span class="ui-float-label">
+          <input id="compName" type="text" formControlName="compName" class="form-control" name="compName" [(ngModel)]="newCompany.compName"
+           pInputText>
+          <label for="compName" class="control-label">Name</label>
+        </span>
+        <span class="help-block" *ngIf="createCompanyForm.controls['compName'].invalid && createCompanyForm.controls['compName'].touched">
+            Name Is Required</span>
+      </div><br>
+      <div class="form-group" [class.has-error]="createCompanyForm.controls['password'].invalid && createCompanyForm.controls['password'].touched"
+      [class.has-success]="createCompanyForm.controls['password'].valid && createCompanyForm.controls['password'].touched">
+        <span class="ui-float-label">
+            <input id="password"  type="password" formControlName="password" class="form-control" name="password" [(ngModel)]="newCompany.password" pPassword>
+            <label for="password" class="control-label">Password</label>
+        </span>
+        <span toggle="#password" class="pi pi-pw pi-eye field-icon toggle-password"></span>
+        <span class="help-block" *ngIf="createCompanyForm.controls['password'].invalid && createCompanyForm.controls['password'].touched">
+            Password Is Required
+          </span>
+    </div><br>
+    <div class="form-group" [class.has-error]="createCompanyForm.controls['email'].invalid && createCompanyForm.controls['email'].touched"
+    [class.has-success]="createCompanyForm.controls['email'].valid && createCompanyForm.controls['email'].touched">
+      <span class="ui-float-label">
+          <input id="email" type="email" formControlName="email" class="form-control" name="email" [(ngModel)]="newCompany.email" >
+          <label for="email" class="control-label">Email</label>
+      </span>
+      <span class="help-block" *ngIf="createCompanyForm.controls['email'].invalid && createCompanyForm.controls['email'].touched">
+          <span class="help-block" *ngIf="createCompanyForm.get('email').errors['required']">
+          Email Is Required
+      </span>
+          <span class="help-block" *ngIf="createCompanyForm.get('email').errors['email']">
+              Please Enter A vaild Email
+          </span>
+        </span>
+    </div>
+    <button pButton  [disabled]="!newCompany.compName"  type="submit" class="ui-button-rounded" label="Add Company" (click)="addNewCompany()"></button>
+  </form>
+  </p-fieldset>
+</div>

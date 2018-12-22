@@ -1,0 +1,27 @@
+<div class="container">
+  <p-fieldset [legend]="caption">
+  <form>
+     <div class="form-group">
+          <span class="ui-float-label">
+              <input id=""  type="number" class="form-control" name="id" [(ngModel)]="requestedCustomer.id" pInputText>
+              <label for="id">Company Id</label>
+          </span>
+      </div><br>
+      <div class="form-group">
+          <span class="ui-float-label">
+              <input id="compName" type="text" class="form-control" name="compName" [(ngModel)]="requestedCustomer.custName" disabled="true"  pInputText>
+              <label for="compName">Name</label>
+          </span>
+      </div><br>
+      <div class="form-group">
+          <span class="ui-float-label">
+              <input id="password"  type="text" class="form-control" name="password" [(ngModel)]="requestedCustomer.password" disabled="true" pPassword>
+              <label for="password">Password</label>
+          </span>
+      </div>
+      <br>
+    <span ><button [disabled]="!requestedCustomer.id" pButton type="submit" class="ui-button-rounded" label="Show" (click)="getCustomer(requestedCustomer.id)"></button></span>
+    <!-- <span *ngIf="true"><button pButton type="submit" class="ui-button-rounded" label="Update" (click)="getCompany(requestedCompany.id)"></button></span> -->
+  </form>
+  </p-fieldset>
+</div>

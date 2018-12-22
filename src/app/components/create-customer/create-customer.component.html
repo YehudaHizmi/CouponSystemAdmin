@@ -1,0 +1,27 @@
+<div class="container">
+  <p-fieldset [legend]="caption">
+      <form [formGroup]="createCustomerForm">
+          <div class="form-group" [class.has-error]="createCustomerForm.controls['custName'].invalid && createCustomerForm.controls['custName'].touched"
+          [class.has-success]="createCustomerForm.controls['custName'].valid && createCustomerForm.controls['custName'].touched">
+        <span class="ui-float-label">
+            <input id="compName" type="text" formControlName="custName" class="form-control" name="compName" [(ngModel)]="newCustomer.custName" pInputText>
+            <label for="compName">Name</label>
+        </span>
+        <span class="help-block" *ngIf="createCustomerForm.controls['custName'].invalid && createCustomerForm.controls['custName'].touched">
+            Name Is Required</span>
+      </div><br>
+      <div class="form-group" [class.has-error]="createCustomerForm.controls['password'].invalid && createCustomerForm.controls['password'].touched"
+      [class.has-success]="createCustomerForm.controls['password'].valid && createCustomerForm.controls['password'].touched">
+          <span class="ui-float-label">
+              <input id="password"  type="password" formControlName="password" class="form-control" name="password" [(ngModel)]="newCustomer.password" pPassword>
+              <label for="password">Password</label>
+          </span>
+          <span toggle="#password" class="pi pi-pw pi-eye field-icon toggle-password"></span>
+          <span class="help-block" *ngIf="createCustomerForm.controls['password'].invalid && createCustomerForm.controls['password'].touched">
+              Password Is Required</span>
+      </div><br>
+      <!-- <button pButton  [disabled]="!newCustomer.custName"  type="submit" class="ui-button-rounded" label="Add Customer" (click)="addNewCustomer(); AddCustForm.reset()"></button> -->
+      <button pButton  [disabled]="!newCustomer.custName"  type="submit" class="ui-button-rounded" label="Add Customer" (click)="addNewCustomer()"></button>
+    </form>
+    </p-fieldset>
+  </div>
