@@ -11,8 +11,8 @@ export class WebApiAdminService {
 
   companyCols: any[];
   customerCols: any[];
-  prefixCompanyUrl = 'http://localhost:8080/company/';
-  prefixCustomerUrl = 'http://localhost:8080/customer/';
+  prefixCompanyUrl = 'http://localhost:8080/admin/company/';
+  prefixCustomerUrl = 'http://localhost:8080/admin/customer/';
   prefixLogOutUrl = 'http://localhost:8080/';
 
 
